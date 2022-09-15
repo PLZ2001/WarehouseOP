@@ -46,6 +46,11 @@
  利用率 Usage Ratio
  UR_ti：t时刻仓库i利用率
  U_ti：t时刻仓库i利用面积
+ 
+ 满足率 Satisfaction Ratio
+ SR_dm：需求单位d对物料m的需求满足率
+ 
+ 
 """
 
 """
@@ -69,6 +74,7 @@
  
  仓库
  NS_i：仓库i容量的面积
+ LS_i：仓库i一年的租赁成本
  
  MAX：一个大常量
  MIN：一个小常量
