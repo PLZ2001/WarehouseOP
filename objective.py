@@ -19,9 +19,9 @@
                               - sum(d=1~D)(D_L_tidm * D_LA_tidm * LP_m) ) )
 
 配送成本：
- LD_ij = sum(t=1~T) ( sum(m=1~M) ( (N_LA_tijm * N_L_tijm * DS_N_ij
-                                 + D_LA_tijm * D_L_tijm * DS_D_ij) * LW_m * 2 ) )
- LD = sum(i=1~N) ( sum(j=1~N) (LD_ij) )
+ LD_N_ij = sum(t=1~T) ( sum(m=1~M) ( N_LA_tijm * N_L_tijm * DS_N_ij * LW_m * 2 ) )
+ LD_D_id = sum(t=1~T) ( sum(m=1~M) ( D_LA_tidm * D_L_tijm * DS_D_id * LW_m * 2 ) )
+ LD = sum(i=1~N) ( sum(j=1~N) (LD_N_ij) + sum(d=1~D) (LD_D_id) )
 
 货物持有成本：
  LI =sum(t=1~T)( I_t )
