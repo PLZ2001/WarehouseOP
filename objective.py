@@ -8,13 +8,13 @@
  LS = sum(i=1~N)(LS_i)
 
 运营成本：
- LB = sum(t=1~T)(LB_t)
- LB_t = 0.036 * (E_t + 12 * I_t)^0.82
- E_t = sum(m=1~M) (sum(j=0~N)(N_L_tjim * N_LA_tjim * LP_m)
+ LB = sum(t=1~T)( sum(i=1~N)(LB_ti) )
+ LB_ti = E_ti + 12 * I_ti
+ E_ti = sum(m=1~M) (sum(j=0~N)(N_L_tjim * N_LA_tjim * LP_m)
                  + sum(j=1~N)(N_L_tijm * N_LA_tijm * LP_m)
                  + sum(d=1~D)(D_L_tidm * D_LA_tidm * LP_m) )
 
- I_t =  sum(t=1~t) (sum(m=1~M) (sum(j=0~N)(N_L_tjim * N_LA_tjim * LP_m)
+ I_ti =  sum(t=1~t) (sum(m=1~M) (sum(j=0~N)(N_L_tjim * N_LA_tjim * LP_m)
                               - sum(j=1~N)(N_L_tijm * N_LA_tijm * LP_m)
                               - sum(d=1~D)(D_L_tidm * D_LA_tidm * LP_m) ) )
 
@@ -24,8 +24,12 @@
  LD = sum(i=1~N) ( sum(j=1~N) (LD_N_ij) + sum(d=1~D) (LD_D_id) )
 
 货物持有成本：
- LI =sum(t=1~T)( I_t )
+ LI =sum(t=1~T)( sum(i=1~N)(I_ti) )
 
 需求满足率：
  SR_dm = sum(t=D_TX_dm~D_TY_dm)( sum(i=1~N) ( D_L_tidm * D_LA_tidm )) / D_A_dm
+
+利用率：
+ UR_ti = sum(m=1~M)( ( sum(t=1~t)( sum(j=0~N)(N_L_tjim * N_LA_tjim) - sum(j=1~N)(N_L_tijm * N_LA_tijm)
+    - sum(d=1~D)( D_L_tidm * D_LA_tidm ) ) ) * LS2_m ) / NS_i
 """
