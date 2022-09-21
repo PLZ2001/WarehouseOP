@@ -336,6 +336,7 @@ try:
     for t in range(1, T + 1):
         for i in range(1, N + 1):
             model.addConstr(UR[t][i] >= 0)
+            model.addConstr(UR[t][i] <= 1.5)
 
 
 
