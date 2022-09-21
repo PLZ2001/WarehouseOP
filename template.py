@@ -129,17 +129,23 @@ try:
     # Create a new model
     model = gp.Model("warehouseOP")
 
+    # 仓库类型
     r = model.addMVar((T+1, N+1), vtype=GRB.BINARY, name="r")
     f = model.addMVar((T+1, N+1), vtype=GRB.BINARY, name="f")
+    # 辐射关系
     RS_N = model.addMVar((T+1, N+1, N+1), vtype=GRB.BINARY, name="RS_N")
     RS_D = model.addMVar((T+1, N+1, D+1), vtype=GRB.BINARY, name="RS_D")
+    # 货运关系
     N_L = model.addMVar((T+1, N+1, N+1, M+1), vtype=GRB.BINARY, name="N_L")
     N_LA = model.addMVar((T+1, N+1, N+1, M+1), vtype=GRB.INTEGER, lb=0, name="N_LA")
     D_L = model.addMVar((T+1, N+1, D+1, M+1), vtype=GRB.BINARY, name="D_L")
     D_LA = model.addMVar((T+1, N+1, D+1, M+1), vtype=GRB.INTEGER, lb=0, name="D_LA")
 
+    # 成本
+    # 租赁成本
     LS_total = LS.sum()
 
+    # 运营成本
     LB = zeros((T+1,N+1))
     E = zeros((T+1,N+1))
     I = zeros((T+1,N+1))
@@ -168,6 +174,7 @@ try:
         for i in range(1,N+1):
             LB_total = LB_total + LB[t][i]
 
+    # 配送成本
     LD_N = zeros((N+1,N+1))
     LD_D = zeros((N+1,D+1))
     for i in range(1,N+1):
@@ -190,11 +197,13 @@ try:
         for d in range(1,D+1):
             LD_total = LD_total + LD_D[i][d]
 
+    # 存货持有成本
     LI_total = 0
     for t in range(1,T+1):
         for i in range(1,N+1):
             LI_total = LI_total + I[t][i]
 
+    # 满足率
     SR = zeros((D+1,M+1))
     for d in range(1,D+1):
         for m in range(1,M+1):
@@ -207,6 +216,7 @@ try:
         for m in range(1,M+1):
             SR_total = SR_total + SR[d][m]/(D*M)
 
+    # 利用率
     UR = zeros((T + 1, N + 1))
     for t in range(1, T + 1):
         for i in range(1, N + 1):
@@ -227,10 +237,12 @@ try:
         for i in range(1, N + 1):
             UR_total = UR_total + UR[t][i] / (T * N)
 
-
+    # 总目标函数
     total = LS_total+LB_total+LD_total+LI_total
     # Set objective - maximize number of queens
     model.setObjective(total, GRB.MINIMIZE)
+
+
 
     # Add constraints
     for t in range(1,T+1):
